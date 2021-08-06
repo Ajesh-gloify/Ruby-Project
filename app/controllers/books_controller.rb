@@ -6,14 +6,11 @@ class BooksController < ApplicationController
 
     @books = Book.left_joins(:user).select('books.*, users.name')
 
-
   else
 
     # @books = Book.joins(:user).select('books.*, users.name').where("users.id = #{ current_user.id }")
 
     @books = Library.joins("RIGHT OUTER JOIN books ON books.library_id = libraries.id LEFT OUTER JOIN users on users.id = books.user_id").select('books.*, users.name, libraries.name as library_name').where("books.user_id = #{ current_user.id }")
-
-    
 
     end
   end
